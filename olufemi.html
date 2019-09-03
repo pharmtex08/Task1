@@ -1,9 +1,167 @@
 <!DOCTYPE html>
 <html>
  <head>
+ <script type="text/javascript">
+ // Defining a function to display error message
+ function printError(elemId, hintMsg) {
+ document.getElementById(elemId).innerHTML = hintMsg;
+ }
+ 
+ // Defining a function to validate form 
+ function validateForm() {
+ // Retrieving the values of form elements 
+ var name = document.contactForm.name.value;
+ var email = document.contactForm.email.value;
+ var title = document.contactForm.title.value;
+ var message = document.contactForm.message.value;
+ 
+ 
+ // Defining error variables with a default value
+ var nameErr = emailErr = titleErr = messageErr = true;
+ 
+ // Validate namr
+ if(name == "") {
+ printError("nameErr", "Please enter your name");
+ } else {
+ var nameL=4
+ var regex = /^[a-zA-Z\s]+$/;                
+ if(regex.test(name) === false || name.length<nameL) {
+ printError("nameErr", "Please enter a valid name and not less than 4 characters");
+ } else {
+ printError("nameErr", "");
+ nameErr = false;
+ }
+ }
+ 
+ // Validate email address
+ if(email == "") {
+ printError("emailErr", "Please enter your email address");
+ } else {
+ // Regular expression for basic email validation
+ var regex = /^\S+@\S+\.\S+$/;
+ if(regex.test(email) === false) {
+ printError("emailErr", "Please enter a valid email address");
+ } else{
+ printError("emailErr", "");
+ emailErr = false;
+ }
+ }
+ // Validate Title
+ if(title == "") {
+ printError("titleErr", "Please enter your Message Title");
+ } else {
+ var titL=4
+ var regex = /^[a-zA-Z\s]+$/;                
+ if(regex.test(title) === false || title.length<titL) {
+ printError("titleErr", "Please enter a valid Title and not less than 4 Characters");
+ } else {
+ printError("titleErr", "");
+ titleErr = false;
+ }
+ }
+ // Validate Message
+ if(message == "") {
+ printError("messageErr", "Please enter your Message");
+ } else {
+ var msgL=20
+ var regex = /^[a-zA-Z\s]+$/;          
+ if(regex.test(message) === false || message.length<msgL) {
+ printError("messageErr", "Please enter a valid Message and not Less than 20 Character");
+ } else {
+ printError("messageErr", "");
+ messageErr = false;
+ }
+ }
+ 
+ 
+ // Prevent the form from being submitted if there are any errors
+ if((nameErr || emailErr || titleErr || messageErr) == true) {
+ return false;
+ } else {
+ // Creating a string from input data for preview
+ var dataPreview = "You've entered the following details: \n" +
+ "Full Name: " + name + "\n" +
+ "Email Address: " + email + "\n" +
+ "Title: " + title + "\n" +
+ "Messages: " + message + "\n";
+ // Display input data in a dialog box before submitting the form
+ alert(dataPreview);
+ }
+ };
+ </script>
    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<meta charset="UTF-8">
+    <title> Contact Me</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="validator.js"></script>
+</head> 
  <style type="text/css">
- .container {width:1160px;
+ body {
+ font-size: 16px;
+ background: #f9f9f9;
+ font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+ }
+ h2 {
+ text-align: center;
+ text-decoration: underline;
+ }
+ form {
+ width: 300px;
+ background: #fff;
+ padding: 15px 40px 40px;
+ border: 1px solid #ccc;
+ margin: 50px auto 0;
+ border-radius: 5px;
+ }
+ label {
+ display: block;
+ margin-bottom: 5px
+ }
+ label i {
+ color: #999;
+ font-size: 80%;
+ }
+ input, select {
+ border: 1px solid #ccc;
+ padding: 10px;
+ display: block;
+ width: 100%;
+ box-sizing: border-box;
+ border-radius: 2px;
+ }
+ .row {
+ padding-bottom: 10px;
+ }
+ .form-inline {
+ border: 1px solid #ccc;
+ padding: 8px 10px 4px;
+ border-radius: 2px;
+ }
+ .form-inline label, .form-inline input {
+ display: inline-block;
+ width: auto;
+ padding-right: 15px;
+ }
+ .error {
+ color: red;
+ font-size: 90%;
+ }
+ input[type="submit"] {
+ font-size: 110%;
+ font-weight: 100;
+ background: #006dcc;
+ border-color: #016BC1;
+ box-shadow: 0 3px 0 #0165b6;
+ color: #fff;
+ margin-top: 10px;
+ cursor: pointer;
+ }
+ input[type="submit"]:hover {
+ background: #0165b6;
+ }
+ </style>
+ <style type="text/css">
+ .container {width:1060px;
  margin:0 auto;
  padding:200px 50px;
  border:5px solid blue;
@@ -39,7 +197,7 @@
  }
  </style>
 <title>Oyemade Olufemi HTML Resume</title>
-</head>
+
 <body>
 <div class="container">
 <div id="header">
@@ -377,7 +535,38 @@
             <hr width="100%" size="#" color="tomato">
             <p>
             On Request</p>
+            <br>
+            <hr width="100%" size="#" color="tomato">
+            <form name="contactForm" onsubmit="return validateForm()" action="" method="post">
+            <h2>Contact Form</h2>
+            <div class="row">
+            <label>Full Name</label>
+            <input type="text" name="name" minlenght="4"> 
+            <div class="error" id="nameErr"></div>
+            </div>
+            <div class="row">
+            <label>Email Address</label>
+            <input type="text" name="email">
+            <div class="error" id="emailErr"></div>
+            </div>
+            <div class="row">
+            <label>Title</label>
+            <input type="text" name="title" minlenght="4">
+            <div class="error" id="titleErr"></div>
+            </div>
+            <div class="row">
+            <label >Your message:</label>
+            <textarea id="message" name="message" rows="7" cols="40" minlenght="20"></textarea>
+            <div class="error" id="messageErr"></div>
+            </div>     
+            <div class="row">
+            <input type="submit" value="Submit">
+            </div>
+            </form>
+            <br>
+            <hr width="100%" size="#" color="tomato">
      </div>
+     
      <div id="footer"></div>
      </div>
     </body>
